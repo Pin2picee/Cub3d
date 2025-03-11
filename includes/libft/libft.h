@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 23:56:24 by abelmoha          #+#    #+#             */
-/*   Updated: 2024/12/08 15:11:20 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:17:54 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-void	ft_lstadd_front(t_list **lst, t_list *new);
-void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstadd_front(t_list **lst, t_list *neww);
+void	ft_lstadd_back(t_list **lst, t_list *neww);
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 void	ft_lstdelone(t_list *lst, void (*del)(void *));

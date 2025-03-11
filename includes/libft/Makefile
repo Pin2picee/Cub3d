@@ -11,7 +11,7 @@ ft_toupper.c ft_bzero.c ft_memset.c ft_memcpy.c ft_memmove.c \
 ft_putchar_fd.c ft_putstr_fd.c ft_putnbr_fd.c ft_putendl_fd.c \
 ft_memchr.c ft_calloc.c ft_memcmp.c ft_substr.c ft_strjoin.c \
 ft_itoa.c ft_strnstr.c ft_split.c ft_striteri.c ft_strmapi.c \
-ft_strtrim.c ft_printf/ft_printf.c ft_printf/number.c ft_printf/alpha.c
+ft_strtrim.c ft_printf/ft_printf.c ft_printf/number.c ft_printf/alpha.c \
 ft_strldup.c ft_strcmp.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)

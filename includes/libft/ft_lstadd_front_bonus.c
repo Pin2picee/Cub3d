@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abelmoha <marvin@.42.fr>                   +#+  +:+       +#+        */
+/*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 12:58:58 by abelmoha          #+#    #+#             */
-/*   Updated: 2023/10/14 13:03:05 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:22:49 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *neww)
 {
-	new -> next = *lst;
-	*lst = new;
+	neww -> next = *lst;
+	*lst = neww;
 }

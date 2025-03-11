@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   LIB.H                                              :+:      :+:    :+:   */
+/*   LIB.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/10 15:29:33 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:41:06 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@
 typedef struct s_game
 {
     //------------------------------- for file
-    char    *NO;// =======> ce sont les chemins de texture
-    char    *SO;
-    char    *WE;
-    char    *EA;
-    char    *F;// couleur du sol
-    char    *C;// couleur du plafond
-    char    *R;
+    char **texture;
     int     total_lu;// de bytes lu par read pour
+    char	**TextureName;
     //---------------------------------
     char    **map;// dans un tableau de tableau avec axe x et y
 }           t_game;
 
+/*
 typedef struct s_img
 {
-    /* data */
+    // data
 };      t_img;
+
+*/
+
+int main_parsing(char *file, t_game *data);
 
 
 #endif
