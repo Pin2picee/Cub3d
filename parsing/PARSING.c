@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/11 17:25:05 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:44:19 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,31 @@ void	ft_init_texture(t_game *d)
 int	CheckAlreadyExist(char *file, char **TextureName)
 {
 	int		fd;
-	char	**temp_tab;
 	int		i;
 	char	*line;
 	int		j;
 	
 	i = 0;
-	fd = open(file, O_RDONLY);
-	get_next_line(fd);
+	j = 0;
 	while (TextureName[i])
 	{
-		
+		fd = open(file, O_RDONLY);
+		line = get_next_line(fd);
+		j = 0;
+		while (line != NULL && !ft_strnstr(line, "111", ft_strlen(line)))
+		{
+			if (!ft_strncmp(TextureName[i], line, ft_strlen(TextureName[i])))
+			{
+				j++;
+			}
+			free(line);
+			line = get_next_line(fd);
+		}
+		if (j > 1)
+			return (close(fd), 1);
 	}
+	free(line);
+	return (close(fd), 0);
 }
 
 /*
@@ -131,11 +144,9 @@ int	CheckExist(char *file, char **TextureName)
 		line = get_next_line(fd);
 	}
 	
-	//if(CheckAlreadyExist(file, TextureName))
-		//return (close(fd), 1);
+	if(CheckAlreadyExist(file, TextureName))
+		return (close(fd), 1);
 	return (close(fd), 0);
-	
-	//temp_tab = ft_calloc();
 }
 
 /*
