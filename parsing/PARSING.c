@@ -6,12 +6,11 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/11 17:44:19 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:07:42 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/LIB.h"
-
 
 int check_extension(char *file)
 {
@@ -25,94 +24,6 @@ int check_extension(char *file)
 	return (0);
 }
 
-/*
-==================================================
-	verifie si le fichiers et vide           
-==================================================
-*/
-
-int ft_file_empty(char *file)
-{
-	int		fd;
-	int     nb_lu;
-	int     total_lu;
-	char	buff_temp[1024];
-
-	
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (1);
-	total_lu = 0;
-	nb_lu = read(fd, buff_temp, sizeof(buff_temp));
-	while (nb_lu > 0)
-	{
-		total_lu += nb_lu;
-		nb_lu = read(fd, buff_temp, sizeof(buff_temp));
-	}
-	close(fd);
-	if (total_lu < 1)
-		return (1);
-	return (0);
-}
-/*
-======================================================
-				Init mes textures possibles
-======================================================
-*/
-
-void	ft_init_texture(t_game *d)
-{
-	int	i;
-
-	i = 0;
-	d->TextureName = (char **)ft_calloc(7, sizeof(char *));
-	while (i < 6)
-	{
-		d->TextureName[i] = (char *)ft_calloc(3, sizeof(char *));
-		i++;
-	}
-	d->TextureName[0] = "NO ";
-	d->TextureName[1] = "SO ";
-	d->TextureName[2] = "WE ";
-	d->TextureName[3] = "EA ";
-	d->TextureName[4] = "C ";
-	d->TextureName[5] = "F ";
-}
-
-/*
-======================================================
-				Check si doublon
-======================================================
-*/
-int	CheckAlreadyExist(char *file, char **TextureName)
-{
-	int		fd;
-	int		i;
-	char	*line;
-	int		j;
-	
-	i = 0;
-	j = 0;
-	while (TextureName[i])
-	{
-		fd = open(file, O_RDONLY);
-		line = get_next_line(fd);
-		j = 0;
-		while (line != NULL && !ft_strnstr(line, "111", ft_strlen(line)))
-		{
-			if (!ft_strncmp(TextureName[i], line, ft_strlen(TextureName[i])))
-			{
-				j++;
-			}
-			free(line);
-			line = get_next_line(fd);
-		}
-		if (j > 1)
-			return (close(fd), 1);
-	}
-	free(line);
-	return (close(fd), 0);
-}
 
 /*
 =======================================================
@@ -143,7 +54,6 @@ int	CheckExist(char *file, char **TextureName)
 		free(line);
 		line = get_next_line(fd);
 	}
-	
 	if(CheckAlreadyExist(file, TextureName))
 		return (close(fd), 1);
 	return (close(fd), 0);
@@ -155,15 +65,12 @@ int	CheckExist(char *file, char **TextureName)
 	et qui les stock dans la data            
 ==================================================
 */
-int check_texture(char *file, t_game *d, int fd)
+void chop_texture(char *file, t_game *d, int fd, int i)
 {
-	int     i;
 	char    *line;
-	
-	// initialise mon tableau de de name texture
-	i = 0;
+
 	d->texture = (char **)ft_calloc(7, sizeof(char *));
-   while (i < 6)
+   while (i < 6 && d->texture != NULL)
    {
 		fd = open(file, O_RDONLY);
 		line = get_next_line(fd);
@@ -171,20 +78,19 @@ int check_texture(char *file, t_game *d, int fd)
 		{
 			if (ft_strnstr(line, d->TextureName[i], ft_strlen(d->TextureName[i])))
 			{
-				d->texture[i] = ft_strdup(line);
-				i++;
+				d->texture[i++] = ft_strdup(line);
 				get_next_line(-42);
-				close(fd);
 				free(line);
 				break;
 			}
 			free(line);
 			line = get_next_line(fd);
 		}
+		close(fd);
 		if (line == NULL)
-			return (1);
+			return ;
    }
-   return (close(fd), 0);
+   return ;
 }
 
 /*
@@ -194,20 +100,8 @@ int check_texture(char *file, t_game *d, int fd)
 ==================================================
 */
 
-int ft_line_empty(char *line)
-{
-	int i;
 
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ' || line[i] != '\n' || line[i] != '\t')
-			return (0);    
-		i++;
-	}
-	return (1);
-}
-
+/*
 int	fd_to_map(int fd, int total_lu, t_game *game)
 {
 	char *line;
@@ -219,7 +113,7 @@ int	fd_to_map(int fd, int total_lu, t_game *game)
 		line = get_next_line(fd);
 		if (line == NULL)
 			return (perror("Error\n"), 1);
-		if (!strstr(line, "NO") && !strstr(line, "SO") && !strstr(line, "WE") && !strstr(line, "EA") && line[0] != 'C' && line[0] != 'F' && !ft_line_empty(line))
+		if //(== a un 111 ou  "   " ou peut import qui fait partie de la map)
 			break;
 	}
 	
@@ -228,6 +122,7 @@ int	fd_to_map(int fd, int total_lu, t_game *game)
 	
 
 }
+*/
 
 /*
 ===========================================================
@@ -239,18 +134,23 @@ int	fd_to_map(int fd, int total_lu, t_game *game)
 int main_parsing(char *file, t_game *data)
 {
 	int fd;
-	int i_map;//indice de la map
+	//int i_map;//indice de la map
 	
 	
 	if (check_extension(file))// verifie la bonne extension
 		return (1);
+
 	if (ft_file_empty(file))// verifie si le fichier est vide
 		return (1);
-	ft_init_texture(data);
-	if (CheckExist(file, data->TextureName))
+		
+	ft_init_texture(data);// initialise mon tableau de cle de texture
+	
+	if (CheckExist(file, data->TextureName)) // verifie si les cles de textures existe et check les doublons
 		return (printf("checkexist"), 1);
-	//if (check_texture(file, data, 0))// verifie si toutes les textures sont bonne
-		//return (1);
+
+	//chop_texture(file, data, fd, 0);// recupere les chemins des textures avec leurs cles
+	
+	
 	/*
 	fd = open(file, O_RDONLY);
 	if (fd_to_map())

@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:52:42 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/11 14:42:01 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:08:21 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int main(int argc, char **argv)
 {
     t_game data;
     
+    (void)argc; 
     if (main_parsing(argv[1], &data))
     {
         printf("PROBLEM MAP");
