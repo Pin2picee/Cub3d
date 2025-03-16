@@ -1,38 +1,9 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    organisation_Pin2picee                             :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/06 16:49:07 by abelmoha          #+#    #+#              #
-#    Updated: 2025/03/12 17:01:12 by abelmoha         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 
+verification :
+        -> CLE si existe /
+        -> CLE si double /
+        -> SI TOUTES LES CLES
+        -> chemin d'acces existant
 
 
-
-->>>>
-
-/**
-===========================================================================
-free :
-        NE PAS OUBLIER DE free 
-                    ==1135808== 56 bytes in 1 blocks are definitely lost in loss record 1 of 2
-            ==1135808==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-            ==1135808==    by 0x109AE4: ft_calloc (ft_calloc.c:19)
-            ==1135808==    by 0x109413: ft_init_texture (PARSING.c:68)
-            ==1135808==    by 0x109952: main_parsing (PARSING.c:238)
-            ==1135808==    by 0x109264: main (MAIN.c:59)
-            ==1135808== 
-            ==1135808== 144 bytes in 6 blocks are definitely lost in loss record 2 of 2
-            ==1135808==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-            ==1135808==    by 0x109AE4: ft_calloc (ft_calloc.c:19)
-            ==1135808==    by 0x109441: ft_init_texture (PARSING.c:71)
-            ==1135808==    by 0x109952: main_parsing (PARSING.c:238)
-            ==1135808==    by 0x109264: main (MAIN.c:59)
-=============================================================================
-
-**/

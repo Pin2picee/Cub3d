@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/12 18:07:42 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/16 16:44:48 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int check_extension(char *file)
 {
 	char *extension;
 	
-	extension = ft_strchr(file, '.');
+	extension = ft_strrchr(file, '.');
 	if (!extension || ft_strcmp(extension, ".cub"))// si pas de . ou extension differente
 	{
 		return (1);
@@ -24,73 +24,72 @@ int check_extension(char *file)
 	return (0);
 }
 
-
 /*
 =======================================================
 				Check si toutes les clefs existe
 				et appel la check doublon
 =======================================================
 */
-int	CheckExist(char *file, char **TextureName)
+int	CheckExist(t_game *data, int i, int j)
 {
-	int		fd;
-	char	*line;
-	int		i;
+	int		count;
 	
-	i = 0;
-	fd = open (file, O_RDONLY);
-	line = get_next_line(fd);
-	while (line != NULL && !ft_strnstr(line, "111", ft_strlen(line)))
+	count = 0;
+	while (data->split[j] && count < 6)
 	{
 		i = 0;
-		while (TextureName[i])
+		while (data->TextureName[i])
 		{
-			if (!ft_strncmp(line, TextureName[i], ft_strlen(TextureName[i])) || !ft_strcmp("\n", line))
-				break;
+			if (!ft_strncmp(data->split[j], data->TextureName[i], ft_strlen(data->TextureName[i])))
+			{
+				count++;
+				break ;
+			}
 			if (i == 5)
 				return (1);
 			i++;
 		}
-		free(line);
-		line = get_next_line(fd);
+		j++;
 	}
-	if(CheckAlreadyExist(file, TextureName))
-		return (close(fd), 1);
-	return (close(fd), 0);
+	data->index = j;// rammene mon index a la deniere texture + 1
+	if(count < 5 || CheckAlreadyExist(data))
+		return (1);
+	return (0);
 }
 
 /*
 ==================================================
-	fonction va chercher les chemins des textures
+	fonction va chercher et checker les chemins des textures
 	et qui les stock dans la data            
 ==================================================
 */
-void chop_texture(char *file, t_game *d, int fd, int i)
-{
-	char    *line;
 
-	d->texture = (char **)ft_calloc(7, sizeof(char *));
-   while (i < 6 && d->texture != NULL)
-   {
-		fd = open(file, O_RDONLY);
-		line = get_next_line(fd);
-		while(line != NULL && !ft_strnstr(line, "111", ft_strlen(line)))
-		{
-			if (ft_strnstr(line, d->TextureName[i], ft_strlen(d->TextureName[i])))
-			{
-				d->texture[i++] = ft_strdup(line);
-				get_next_line(-42);
-				free(line);
-				break;
-			}
-			free(line);
-			line = get_next_line(fd);
-		}
-		close(fd);
-		if (line == NULL)
-			return ;
-   }
-   return ;
+int	chop_texture(t_game *data, int i, int j)
+{
+	while (data->split[i] && i < data->index)// tant qu'on a pas depasser toutes les textures
+	{
+		j = 0;
+		while (data->split[i][j] && data->split[i][j] >= 'A' && data->split[i][j] <= 'Z')
+			j++;
+		while(data->split[i][j] && data->split[i][j] == ' ')
+			j++;
+		if (access((const char *)data->split[i] + j, F_OK) < 0)
+			return (1);
+		if (!ft_strncmp(data->split[i], data->TextureName[0], ft_strlen(data->TextureName[0])))
+			data->NO = data->split[i] + j;
+		else if (!ft_strncmp(data->split[i], data->TextureName[1], ft_strlen(data->TextureName[1])))
+			data->SO = data->split[i] + j;
+		else if (!ft_strncmp(data->split[i], data->TextureName[2], ft_strlen(data->TextureName[2])))
+			data->WE = data->split[i] + j;
+		else if (!ft_strncmp(data->split[i], data->TextureName[3], ft_strlen(data->TextureName[3])))
+			data->EA = data->split[i] + j;
+		else if (!ft_strncmp(data->split[i], data->TextureName[4], ft_strlen(data->TextureName[4])))
+			data->C = data->split[i] + j;
+		else if (!ft_strncmp(data->split[i], data->TextureName[5], ft_strlen(data->TextureName[5])))
+			data->F = data->split[i] + j;
+		i++;
+	}
+	return (0);
 }
 
 /*
@@ -135,22 +134,26 @@ int main_parsing(char *file, t_game *data)
 {
 	int fd;
 	//int i_map;//indice de la map
-	
-	
+
+
 	if (check_extension(file))// verifie la bonne extension
 		return (1);
 
 	if (ft_file_empty(file))// verifie si le fichier est vide
 		return (1);
-		
+
 	ft_init_texture(data);// initialise mon tableau de cle de texture
-	
-	if (CheckExist(file, data->TextureName)) // verifie si les cles de textures existe et check les doublons
+//----------------------------------------------------------------------
+	ft_init_split(file, data);// recup toutes les lignes du tableau
+
+	if (CheckExist(data, 0, 0)) // verifie si les cles de textures existe et check les doublons
 		return (printf("checkexist"), 1);
 
-	//chop_texture(file, data, fd, 0);// recupere les chemins des textures avec leurs cles
-	
-	
+	if (chop_texture(data, 0, 0))
+		return (1);// recupere les chemins des textures en verifiant l'access
+	/**
+	 * Maintenant faut push la map dans un tableau de tableau pour mieux manipuler
+	 */
 	/*
 	fd = open(file, O_RDONLY);
 	if (fd_to_map())

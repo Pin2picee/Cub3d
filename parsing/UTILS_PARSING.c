@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:20:03 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/12 18:02:54 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:40:26 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,41 +85,60 @@ int ft_file_empty(char *file)
 	return (0);
 }
 
-
+int	ft_init_split(char *file, t_game *data)
+{
+	int		fd;
+	int		lettre_lu;
+	int		total;
+	char	buffer[4096];
+	char	*str;
+	
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (1);
+	lettre_lu = read(fd, buffer, BUFFERSIZ);
+	if (!lettre_lu)
+		return (1);
+	total = lettre_lu; 
+	while (lettre_lu > 0)
+	{
+		lettre_lu = 0;
+		 lettre_lu = read(fd, buffer, BUFFERSIZ);
+		 total += lettre_lu;
+	}
+	close(fd);
+	str = ft_calloc(sizeof(char), total + 1);
+	fd = open(file, O_RDONLY);
+	lettre_lu = read(fd, str, total);
+	data->split = ft_split(str, '\n');// on get_next_line tout le tableau direct
+	return (close(fd), 0);
+}
 
 /*
 ======================================================
 				Check si doublon
 ======================================================
 */
-int	CheckAlreadyExist(char *file, char **TextureName)
+int	CheckAlreadyExist(t_game *data)
 {
-	int		fd;
-	int		i;
-	char	*line;
-	int		j;
+	int	i;
+	int	j;
+	int	count;
 	
 	i = 0;
-	j = 0;
-	while (TextureName[i])
+	while (data->TextureName[i])
 	{
-		fd = open(file, O_RDONLY);
-		line = get_next_line(fd);
 		j = 0;
-		while (line != NULL && !ft_strnstr(line, "111", ft_strlen(line)))
+		count = 0;
+		while(data->split[j])
 		{
-			if (!ft_strncmp(TextureName[i], line, ft_strlen(TextureName[i])))// si je tombe dessus
-				j++;// incremente le compteur de deja vue;
-			free(line);
-			line = get_next_line(fd);
-		}
-        if (line)
-            free(line);
-        close(fd);
-        get_next_line(-42);
-		if (j > 1)
+			if (!ft_strncmp(data->split[j], data->TextureName[i], ft_strlen(data->TextureName[i])))
+				count++;
+			if(count > 1)
 				return (1);
-        i++;
+			j++;
+		}
+		i++;
 	}
 	return (0);
 }
