@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/16 16:40:58 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:01:42 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,18 @@ typedef struct s_game
     char    *EA;
     char    *F;
     char    *C;
+    //--------------------------------- MAP
+    int map_height;
     //---------------------------------
     char    **map;// dans un tableau de tableau avec axe x et y
+    
 }           t_game;
+
+typedef struct s_point
+{
+    int x;
+    int y;
+}               t_point;
 
 /*
 typedef struct s_img
@@ -67,5 +76,7 @@ int     chop_texture(t_game *data, int i, int j);// a appele avec i et j a 0 -> 
 int	    CheckAlreadyExist(t_game *data);
 
 int	    ft_init_split(char *file, t_game *data);
+
+int     parse_map(t_game *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/16 16:44:48 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:30:16 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	CheckExist(t_game *data, int i, int j)
 		}
 		j++;
 	}
+	while (ft_line_empty(data->split[j]))
+		j++;
 	data->index = j;// rammene mon index a la deniere texture + 1
 	if(count < 5 || CheckAlreadyExist(data))
 		return (1);
@@ -132,10 +134,6 @@ int	fd_to_map(int fd, int total_lu, t_game *game)
 */
 int main_parsing(char *file, t_game *data)
 {
-	int fd;
-	//int i_map;//indice de la map
-
-
 	if (check_extension(file))// verifie la bonne extension
 		return (1);
 
@@ -148,16 +146,11 @@ int main_parsing(char *file, t_game *data)
 
 	if (CheckExist(data, 0, 0)) // verifie si les cles de textures existe et check les doublons
 		return (printf("checkexist"), 1);
-
-	if (chop_texture(data, 0, 0))
-		return (1);// recupere les chemins des textures en verifiant l'access
-	/**
-	 * Maintenant faut push la map dans un tableau de tableau pour mieux manipuler
-	 */
-	/*
-	fd = open(file, O_RDONLY);
-	if (fd_to_map())
-	*/
+	data->map = data->split + data->index;
+	if (chop_texture(data, 0, 0))// recupere les chemins des textures en verifiant l'access
+		return (1);
+	if (parse_map(data))
+		return (1);
+	
 	return (0);
-	close(fd);
 }

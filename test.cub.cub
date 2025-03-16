@@ -1,8 +1,8 @@
 
 SO ./MAIN.c
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
-NO ./path_to_the_north_texture
+WE ./MAIN.c
+EA ./MAIN.c
+NO ./MAIN.c
 
 
 F 220,100,0
