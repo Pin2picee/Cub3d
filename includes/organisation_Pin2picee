@@ -1,19 +1,4 @@
+OUBLIE PAS DE FAIRE UN CHECK ELEMENTS pour verifier si tous les elements de la map sont bon
 
 
-verification : //FAITE
-        -> CLE si existe /
-        -> CLE si double /
-        -> SI TOUTES LES CLES
-        -> chemin d'acces existant
-
-MAINTENANT FAUT PUSH LA MAP DANS UN TABLEAU DE TABLEAU APART
-
-
-cbn Maintenant on a la map
-
-mais il faut la parser
-
-donc je dois verifier quelle est fermer sachant qu'il y a possibiliter qu'il y est des espaces qui sont considerer comme espace vide
-
-je dois verifier que mon personnage ne puisse pas atteindre espace vide
-
+et si le bon nombre de personnage est .

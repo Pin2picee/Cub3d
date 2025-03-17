@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/17 01:03:20 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:27:52 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 # define RESOLUTION_L 320
 # define ROSOLUTION_H 200
 # define BUFFERSIZ 1024
+
+typedef struct s_point
+{
+    double x;
+    double y;
+}               t_point;
+
 typedef struct s_game
 {
     //------------------------------- for file
@@ -38,16 +45,13 @@ typedef struct s_game
     char    *C;
     //--------------------------------- MAP
     int map_height;
+    int flags;
     //---------------------------------
     char    **map;// dans un tableau de tableau avec axe x et y
+    t_point pos_player;
     
 }           t_game;
 
-typedef struct s_point
-{
-    int x;
-    int y;
-}               t_point;
 
 /*
 typedef struct s_img
@@ -81,4 +85,7 @@ int     parse_map(t_game *data);
 
 int	limit_number_rgb(char *color);
 
+int	ft_position(t_game *game);
+
+char	**copy_map(char **map, int height);// la meme que celui de so_long
 #endif

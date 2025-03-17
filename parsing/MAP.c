@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 17:30:34 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/17 01:08:41 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:21:24 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,71 +14,87 @@
 
 void    info_map(t_game *data)
 {
-    int j;
-    
-    j = 0;
-    while (data->map[j] != NULL)
-    {
-        j++;
-    }
-    data->map_height = j;
-    return ;
-}
-int     parse_bottom_top(t_game *data)
-{
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    while (data->map[i][j] == ' ')
-        j++;
-    while (data->map[i][j])
-    {
-        if (data->map[i][j] != '1')
-            return (1);
-        j++;
-    }
-    j = 0;
-    i = data->map_height - 1;
-    while (data->map[i][j] == ' ')
-        j++;
-    while (data->map[i][j])
-    {
-        if (data->map[i][j] != '1')
-            return (1);
-        j++;
-    }
-    return (0);
+	int j;
+	
+	j = 0;
+	while (data->map[j] != NULL)
+	{
+		j++;
+	}
+	data->map_height = j;
+	return ;
 }
 
-int parse_side(t_game *data)
+int	check_elements(t_game *game)
 {
-    int i;
-    int j;
-    
-    i = 1;
-    j = 0;
-    while (data->map[i][j])
-    {
-        while (data->map[i][j] && data->map[i][j] == ' ')
-            j++;
-        //if (data->map[i][j])
-    }
+	int		i;
+	int		j;
+	char	str[8];
+
+	i = -1;
+	ft_strlcpy(str, "01NESW ", sizeof(str));
+	while (game->map[++i])
+	{
+		j = -1;
+		while (game->map[i][++j] != '\0')
+		{
+			if (!ft_strchr(str, game->map[i][j]))
+				return (1);
+		}
+	}
+	if (ft_position(game))
+		return (1);
+	return (0);
+}
+
+void	fill( t_game *game, char **map_copy, t_point current)
+{
+	if (current.x < 0 || current.y < 0 || current.x >= (double)ft_strlen(map_copy[(int)current.y]) || 
+		current.y >= game->map_height || map_copy[(int)current.y][(int)current.x] == 'F'
+		|| map_copy[(int)current.y][(int)current.x] == '1')
+		return ;
+	if (map_copy[(int)current.y][(int)current.x] == ' ' || (map_copy[(int)current.y][(int)current.x] == '0' &&
+		((int)current.x == 0 || (int)current.x == (int)ft_strlen(map_copy[(int)current.y]) - 1 ||
+			(int)current.y == 0 || (int)current.y == game->map_height - 1)) || !map_copy[(int)current.y - 1][(int)current.x - 1]
+			|| !map_copy[(int)current.y + 1][(int)current.x + 1] || !map_copy[(int)current.y - 1][(int)current.x + 1]
+			|| !map_copy[(int)current.y + 1][(int)current.x - 1])
+	{
+		game->flags = 1;
+		return ;
+	}
+	else if (map_copy[(int)current.y][(int)current.x] == '0'
+		|| map_copy[(int)current.y][(int)current.x] == 'N' || map_copy[(int)current.y][(int)current.x] == 'S' ||
+			 map_copy[(int)current.y][(int)current.x] == 'E' || map_copy[(int)current.y][(int)current.x] == 'W')
+		map_copy[(int)current.y][(int)current.x] = 'F';
+	fill(game, map_copy, (t_point){current.x + 1, current.y});
+	fill(game, map_copy, (t_point){current.x - 1, current.y});
+	fill(game, map_copy, (t_point){current.x, current.y + 1});
+	fill(game, map_copy, (t_point){current.x, current.y - 1});
+	fill(game, map_copy, (t_point){current.x - 1, current.y - 1});
+	fill(game, map_copy, (t_point){current.x + 1, current.y + 1});
+	fill(game, map_copy, (t_point){current.x + 1, current.y - 1});
+	fill(game, map_copy, (t_point){current.x + 1, current.y - 1});
 }
 
 int parse_map(t_game *data)
 {
-    /**
-     * sa ne sert a rien de parser la map via les index
-     * 
-     * i faut faire un flood fill en partant du personnage pour verifier si on tombe sur un espace vide ou une bordure de map
-     * 
-     */
-    info_map(data);
-    if (parse_bottom_top(data))
-        return (1);
-    //if (check_elements(data))
-      //  return (1);
+	char **copy;
+	
+	info_map(data);// donne la hauteur
+	copy = copy_map(data->map, data->map_height);
+	if (check_elements(data))
+		return (1);
+	fill(data, copy, data->pos_player);
+	free(copy);
+	if (data->flags)
+		return (printf("MIAOUUUU"), 1);
+	return (0);
 }
 
+/*
+
+|| !map_copy[(int)current.y - 1][(int)current.x - 1]
+			|| !map_copy[(int)current.y + 1][(int)current.x + 1] || !map_copy[(int)current.y - 1][(int)current.x + 1]
+			|| !map_copy[(int)current.y + 1][(int)current.x - 1]
+
+*/

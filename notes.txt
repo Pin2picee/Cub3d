@@ -10,3 +10,5 @@ Nous aurons une fenetre de 320x200, il y aura donc 320 colonnes.
 1 colonne = 60 /320.
 
 
+
+display ft_strlen(map_copy[current.y])
