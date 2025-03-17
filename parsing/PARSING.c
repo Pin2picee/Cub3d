@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/16 17:30:16 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:03:39 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,71 @@ int	CheckExist(t_game *data, int i, int j)
 }
 
 /*
+===================================================
+
+			Check le bon format du sol et du plafond
+===================================================
+*/
+
+int	check_RGB_F(t_game *data)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while (data->split[i] && ft_strncmp(data->split[i], data->TextureName[5], 2))
+		i++;
+	while (data->split[i][j] && data->split[i][j] >= 'A' && data->split[i][j] <= 'Z')
+		j++;
+	while(data->split[i][j] && data->split[i][j] == ' ')
+		j++;
+	while (data->split[i][j])
+	{
+		if (data->split[i][j] == ',')
+			count++;
+		
+		if ((data->split[i][j] < '0' || data->split[i][j] > '9') && data->split[i][j] != ',')
+			return (1);
+		j++;
+	}
+	if (count > 2 || count < 2)
+			return (1);
+	return (0);
+}
+
+int	check_RGB_C(t_game *data)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while (data->split[i] && ft_strncmp(data->split[i], data->TextureName[4], 2))
+		i++;
+	while (data->split[i][j] && data->split[i][j] >= 'A' && data->split[i][j] <= 'Z')
+		j++;
+	while(data->split[i][j] && data->split[i][j] == ' ')
+		j++;
+	if (limit_number_rgb(data->split[i] + j))
+	while (data->split[i][j])
+	{
+		if (data->split[i][j] == ',')
+			count++;
+		if ((data->split[i][j] < '0' || data->split[i][j] > '9') && data->split[i][j] != ',')
+			return (1);
+		j++;
+	}
+	if (count > 2 || count < 2)
+			return (1);
+	return (0);
+}
+
+/*
 ==================================================
 	fonction va chercher et checker les chemins des textures
 	et qui les stock dans la data            
@@ -68,14 +133,15 @@ int	CheckExist(t_game *data, int i, int j)
 
 int	chop_texture(t_game *data, int i, int j)
 {
-	while (data->split[i] && i < data->index)// tant qu'on a pas depasser toutes les textures
+	while (data->split[i] && i < data->index && !ft_strncmp(data->split[i], data->TextureName[4], 3))// tant qu'on a pas depasser toutes les textures
 	{
 		j = 0;
 		while (data->split[i][j] && data->split[i][j] >= 'A' && data->split[i][j] <= 'Z')
 			j++;
 		while(data->split[i][j] && data->split[i][j] == ' ')
 			j++;
-		if (access((const char *)data->split[i] + j, F_OK) < 0)
+		if (access((const char *)data->split[i] + j, F_OK) < 0 &&
+			ft_strncmp(data->split[i], data->TextureName[4], 2) && ft_strncmp(data->split[i], data->TextureName[5], 2))
 			return (1);
 		if (!ft_strncmp(data->split[i], data->TextureName[0], ft_strlen(data->TextureName[0])))
 			data->NO = data->split[i] + j;
@@ -143,14 +209,15 @@ int main_parsing(char *file, t_game *data)
 	ft_init_texture(data);// initialise mon tableau de cle de texture
 //----------------------------------------------------------------------
 	ft_init_split(file, data);// recup toutes les lignes du tableau
-
+	if (check_RGB_C(data) || check_RGB_F(data))
+		return (1);
 	if (CheckExist(data, 0, 0)) // verifie si les cles de textures existe et check les doublons
 		return (printf("checkexist"), 1);
 	data->map = data->split + data->index;
 	if (chop_texture(data, 0, 0))// recupere les chemins des textures en verifiant l'access
 		return (1);
-	if (parse_map(data))
-		return (1);
+	//if (parse_map(data))
+		//return (1);
 	
 	return (0);
 }

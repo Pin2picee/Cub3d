@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 17:30:34 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/16 18:30:47 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:08:41 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int parse_side(t_game *data)
     {
         while (data->map[i][j] && data->map[i][j] == ' ')
             j++;
-        if (data->map[i][j])
+        //if (data->map[i][j])
     }
 }
 
@@ -78,6 +78,7 @@ int parse_map(t_game *data)
     info_map(data);
     if (parse_bottom_top(data))
         return (1);
-    if (check_elements(data))
-        return (1)
+    //if (check_elements(data))
+      //  return (1);
 }
+

@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/16 18:01:42 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:03:20 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,7 @@ int	    CheckAlreadyExist(t_game *data);
 int	    ft_init_split(char *file, t_game *data);
 
 int     parse_map(t_game *data);
+
+int	limit_number_rgb(char *color);
 
 #endif
