@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/17 13:27:52 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:37:07 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_init_texture(t_game *d);
 
 int     ft_file_empty(char *file);
 
-int     chop_texture(t_game *data, int i, int j);// a appele avec i et j a 0 -> pour gain de place
+int	chop_texture(t_game *data, int i, int j, int fd);// a appele avec i et j a 0 -> pour gain de place
 
 int	    CheckAlreadyExist(t_game *data);
 
@@ -88,4 +88,14 @@ int	limit_number_rgb(char *color);
 int	ft_position(t_game *game);
 
 char	**copy_map(char **map, int height);// la meme que celui de so_long
+
+/*
+=============================================
+                FREE
+=============================================
+*/
+
+void    free_data(t_game *data);
+void    free_tab(char **tab);
+
 #endif

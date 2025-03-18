@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/17 16:18:06 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:20:41 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,16 +122,19 @@ int	check_RGB_C(t_game *data)
 ==================================================
 */
 
-int	chop_texture(t_game *data, int i, int j)
+int	chop_texture(t_game *data, int i, int j, int fd)
 {
-	while (data->split[i] && i < data->index)// tant qu'on a pas depasser toutes les textures
+	char	buffer[1];
+	
+	while (data->split[++i] && i < data->index)// tant qu'on a pas depasser toutes les textures
 	{
 		j = 0;
 		while (data->split[i][j] && data->split[i][j] >= 'A' && data->split[i][j] <= 'Z')
 			j++;
 		while(data->split[i][j] && data->split[i][j] == ' ')
 			j++;
-		if (access((const char *)data->split[i] + j, F_OK) < 0 &&
+		fd = open(data->split[i] + j, O_RDONLY);
+		if ((fd < 0 || 0 > read(fd, buffer, sizeof(buffer))) &&
 			(ft_strncmp(data->split[i], data->TextureName[4], 2) && ft_strncmp(data->split[i], data->TextureName[5], 2)))
 			return (1);
 		if (!ft_strncmp(data->split[i], data->TextureName[0], ft_strlen(data->TextureName[0])))
@@ -146,7 +149,6 @@ int	chop_texture(t_game *data, int i, int j)
 			data->C = data->split[i] + j;
 		else if (!ft_strncmp(data->split[i], data->TextureName[5], ft_strlen(data->TextureName[5])))
 			data->F = data->split[i] + j;
-		i++;
 	}
 	return (0);
 }
@@ -206,7 +208,7 @@ int main_parsing(char *file, t_game *data)
 		return (1);
 	
 	data->map = data->split + data->index;
-	if (chop_texture(data, 0, 0))// recupere les chemins des textures en verifiant l'access
+	if (chop_texture(data, 0, 0, 0))// recupere les chemins des textures en verifiant l'access
 		return (1);
 	if (parse_map(data))
 		return (1);

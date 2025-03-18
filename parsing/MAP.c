@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 17:30:34 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/17 15:21:24 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:37:21 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int parse_map(t_game *data)
 	if (check_elements(data))
 		return (1);
 	fill(data, copy, data->pos_player);
-	free(copy);
+	free_tab(copy);
 	if (data->flags)
 		return (printf("MIAOUUUU"), 1);
 	return (0);

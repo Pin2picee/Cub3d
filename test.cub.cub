@@ -1,5 +1,5 @@
 
-SO .
+SO ./MAIN.c
 WE ./MAIN.c
 EA ./MAIN.c
 NO ./MAIN.c

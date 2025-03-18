@@ -1,4 +1,3 @@
-OUBLIE PAS DE FAIRE UN CHECK ELEMENTS pour verifier si tous les elements de la map sont bon
+pas le droit a la fonction access pour verifier les chemins 
 
-
-et si le bon nombre de personnage est .
+il faut donc que je test avec read pour chaque fichier
