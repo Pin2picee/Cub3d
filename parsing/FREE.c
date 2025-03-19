@@ -31,4 +31,6 @@ void    free_data(t_game *data)
     if (data->TextureName)
         free_tab(data->TextureName);
     // on free la map via le split de ma data car j'ai fait un pointeur vers le debut de la map
+    if (data->split)
+        free_tab(data->split);
 }

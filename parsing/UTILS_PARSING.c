@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:20:03 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/13 15:40:26 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/19 09:52:30 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,21 @@ int ft_line_empty(char *line)
 ======================================================
 */
 
-void	ft_init_texture(t_game *d)
+int ft_init_texture(t_game *d)
 {
-	int	i;
-
-	i = 0;
-	d->TextureName = (char **)ft_calloc(7, sizeof(char *));
-	while (i < 6)
-	{
-		d->TextureName[i] = (char *)ft_calloc(3, sizeof(char *));
-		i++;
-	}
-	d->TextureName[0] = "NO ";
-	d->TextureName[1] = "SO ";
-	d->TextureName[2] = "WE ";
-	d->TextureName[3] = "EA ";
-	d->TextureName[4] = "C ";
-	d->TextureName[5] = "F ";
+    d->TextureName = (char **)ft_calloc(7, sizeof(char *));
+	if (!d->TextureName)
+		return (1);
+    d->TextureName[0] = ft_strdup("NO ");
+    d->TextureName[1] = ft_strdup("SO ");
+    d->TextureName[2] = ft_strdup("WE ");
+    d->TextureName[3] = ft_strdup("EA ");
+    d->TextureName[4] = ft_strdup("C ");
+    d->TextureName[5] = ft_strdup("F ");
+	d->TextureName[6] = NULL;
+	return (0);
 }
+
 
 
 
@@ -85,10 +82,8 @@ int ft_file_empty(char *file)
 	return (0);
 }
 
-int	ft_init_split(char *file, t_game *data)
+int	ft_init_split(char *file, t_game *data, int fd, int lettre_lu)
 {
-	int		fd;
-	int		lettre_lu;
 	int		total;
 	char	buffer[4096];
 	char	*str;
@@ -108,10 +103,12 @@ int	ft_init_split(char *file, t_game *data)
 	}
 	close(fd);
 	str = ft_calloc(sizeof(char), total + 1);
+	if (!str)
+		return (close(fd), 1);
 	fd = open(file, O_RDONLY);
 	lettre_lu = read(fd, str, total);
 	data->split = ft_split(str, '\n');// on get_next_line tout le tableau direct
-	return (close(fd), 0);
+	return (close(fd), free(str), 0);
 }
 
 /*
@@ -126,7 +123,7 @@ int	CheckAlreadyExist(t_game *data)
 	int	count;
 	
 	i = 0;
-	while (data->TextureName[i])
+	while (i < 6 && data->TextureName[i])
 	{
 		j = 0;
 		count = 0;

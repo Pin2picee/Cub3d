@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/18 18:37:07 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/19 09:52:20 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int     main_parsing(char *file, t_game *data);
 
 int     ft_line_empty(char *line);
 
-void	ft_init_texture(t_game *d);
+int ft_init_texture(t_game *d);
 
 int     ft_file_empty(char *file);
 
@@ -79,7 +79,7 @@ int	chop_texture(t_game *data, int i, int j, int fd);// a appele avec i et j a 0
 
 int	    CheckAlreadyExist(t_game *data);
 
-int	    ft_init_split(char *file, t_game *data);
+int	ft_init_split(char *file, t_game *data, int fd, int lettre_lu);
 
 int     parse_map(t_game *data);
 

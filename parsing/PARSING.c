@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/18 18:20:41 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/19 09:52:43 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,9 +199,10 @@ int main_parsing(char *file, t_game *data)
 	if (ft_file_empty(file))// verifie si le fichier est vide
 		return (1);
 
-	ft_init_texture(data);// initialise mon tableau de cle de texture
+	;// initialise mon tableau de cle de texture
 //----------------------------------------------------------------------
-	ft_init_split(file, data);// recup toutes les lignes du tableau
+	if (ft_init_split(file, data, 0, 0) || ft_init_texture(data))// recup toutes les lignes du tableau
+		return (1);
 	if (CheckExist(data, 0, 0)) // verifie si les cles de textures existe et check les doublons
 		return (printf("checkexist"), 1);
 	if (check_RGB_C(data) || check_RGB_F(data))
