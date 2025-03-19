@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/19 09:52:20 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:49:11 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,29 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 # include "libft/get_next_line/get_next_line.h"
-# define RESOLUTION_L 320
-# define ROSOLUTION_H 200
+# include "minilibx-linux/mlx.h"
+# define RESOLUTION_L 2500
+# define RESOLUTION_H 1080
 # define BUFFERSIZ 1024
-
+# define NAME_WINDOW "Cub3d"
+# define rouge 0xFFFF0000
+# define verte 0xFF00FF00
+# define bleu 0xFF0000FF
 typedef struct s_point
 {
     double x;
     double y;
 }               t_point;
+
+typedef struct s_img
+{
+    char    *data;
+    void    *img;
+    int     bpp;
+    int     endian;
+    int     size_line;
+    
+}               t_img;
 
 typedef struct s_game
 {
@@ -49,7 +63,12 @@ typedef struct s_game
     //---------------------------------
     char    **map;// dans un tableau de tableau avec axe x et y
     t_point pos_player;
+    //-------------------------------- RENDER
+
     
+    void    *mlx_ptr;
+    void    *mlx_window;
+    t_img   frame;
 }           t_game;
 
 
@@ -97,5 +116,15 @@ char	**copy_map(char **map, int height);// la meme que celui de so_long
 
 void    free_data(t_game *data);
 void    free_tab(char **tab);
+
+
+/*
+============================================
+            RENDER -> RECASTING
+============================================
+*/
+
+int init_my_mlx(t_game *data);
+
 
 #endif

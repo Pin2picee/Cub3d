@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:52:42 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/19 09:34:00 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/19 10:39:13 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int main(int argc, char **argv)
         printf("PROBLEM MAP :\n");
     }
     else
-        printf("NO PROBLEM\n");
+    {
+        init_my_mlx(&data);
+        mlx_loop(data.mlx_ptr);
+    }
     free_data(&data);
     return (0);
 }

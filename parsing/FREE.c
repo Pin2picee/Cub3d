@@ -33,4 +33,5 @@ void    free_data(t_game *data)
     // on free la map via le split de ma data car j'ai fait un pointeur vers le debut de la map
     if (data->split)
         free_tab(data->split);
+    // il faut free tous le coter mlx pour le render
 }
