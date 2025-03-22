@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/19 14:49:11 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/22 15:23:12 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <fcntl.h>
 # include "libft/get_next_line/get_next_line.h"
 # include "minilibx-linux/mlx.h"
+# include <stdbool.h>
+# include <math.h>
+
 # define RESOLUTION_L 2500
 # define RESOLUTION_H 1080
 # define BUFFERSIZ 1024
@@ -26,6 +29,14 @@
 # define rouge 0xFFFF0000
 # define verte 0xFF00FF00
 # define bleu 0xFF0000FF
+# define PI 3.14159265359
+# define A 97
+# define W 119
+# define S 115
+# define D 100
+# define rotate_left 65361
+# define rotate_right 65363
+
 typedef struct s_point
 {
     double x;
@@ -63,6 +74,14 @@ typedef struct s_game
     //---------------------------------
     char    **map;// dans un tableau de tableau avec axe x et y
     t_point pos_player;
+    double  player_angle;
+    char    angle_initiale;
+    bool key_up;
+    bool key_down;
+    bool key_left;
+    bool key_right;
+    bool key_rotate_left;
+    bool key_rotate_right;
     //-------------------------------- RENDER
 
     
@@ -127,4 +146,20 @@ void    free_tab(char **tab);
 int init_my_mlx(t_game *data);
 
 
+/*
+===============================================
+                    GAME
+===============================================
+*/
+
+void    put_pixel(int x, int y, int color, t_game *data);
+void    clean_img(t_game *data);
+void    draw_square(int x, int y, int size, int color, t_game *data);
+void    map_render(t_game *data);
+
+
+void    init_hook(t_game *data);
+int     key_reset(int keypress, t_game *data);
+int     key_press(int keypress, t_game *data);
+void    move_player(t_game *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 17:30:34 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/18 18:37:21 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/22 15:43:35 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,19 @@ void	fill( t_game *game, char **map_copy, t_point current)
 	fill(game, map_copy, (t_point){current.x + 1, current.y - 1});
 }
 
+void	do_angle_for_player(t_game *data)
+{
+	if (data->angle_initiale == 'N')
+		data->player_angle = PI / 2;
+	else if (data->angle_initiale == 'S')
+		data->player_angle = (3 * PI) / 2;
+	else if (data->angle_initiale == 'W')
+		data->player_angle = PI;
+	else if (data->angle_initiale == 'E')
+		data->player_angle = 0; 
+	printf("angle du joueur est : %f et angle initiale est : %c\n", data->player_angle, data->angle_initiale);
+}
+
 int parse_map(t_game *data)
 {
 	char **copy;
@@ -88,6 +101,7 @@ int parse_map(t_game *data)
 	free_tab(copy);
 	if (data->flags)
 		return (printf("MIAOUUUU"), 1);
+	do_angle_for_player(data);
 	return (0);
 }
 

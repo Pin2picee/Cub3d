@@ -35,6 +35,7 @@ int	ft_position(t_game *game)
 			if (game->map[i][j] == 'N' || game->map[i][j] == 'E' || game->map[i][j] == 'S' || game->map[i][j] == 'W')
 			{
 				count++;
+				game->angle_initiale = game->map[i][j];
 				game->pos_player.y = (double)i + 0.5;
 				game->pos_player.x = (double)j + 0.5;
 			}
