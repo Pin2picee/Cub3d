@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:13:24 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/22 14:52:44 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:14:02 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 void    put_pixel(int x, int y, int color, t_game *data)
 {
     int index;
-
+    
+    if (x > RESOLUTION_L || x < 0 || y > RESOLUTION_H || y < 0)
+        return ;
     index = y * data->frame.size_line + x * data->frame.bpp / 8; //index du bon groupement de pixel a avoir
     
     data->frame.data[index] = color & 0xFF;// on extrait la couleur bleu, BVR car stocker en little endian comme dans la memoire
@@ -29,15 +31,38 @@ void    init_game(t_game *data)
 {
     init_hook(data);// on les init a false
    //draw_square(data->pos_player.x * 64, data->pos_player.y * 64, 5, rouge,  data);// on dessine un carrer qui represente le personnage
-    mlx_put_image_to_window(data->mlx_ptr, data->mlx_window, data->frame.img, 0, 0);// on put l'image charger auparavant, sur laquelle on a travailler dans le window
+}
+
+void    project_rayon(t_game *data)
+{
+    double  rayon_x;
+    double  rayon_y;
+    int  px;
+    int  py;
+    
+    rayon_x = data->pos_player.x;
+    rayon_y = data->pos_player.y;
+     while (data->map[(int)rayon_y][(int)rayon_x] != '1')
+    {
+        px = (int)(rayon_x * 64);
+        py = (int)(rayon_y * 64);
+        put_pixel(px, py, 0xFFFF00, data);
+        
+        rayon_x += cos(data->player_angle) * 0.01;
+        rayon_y += sin(data->player_angle) * 0.01;
+    }
 }
 
 int loop_game(t_game *data)
 {
+    
+    
     move_player(data);
     clean_img(data);
     draw_square(data->pos_player.x * 64, data->pos_player.y * 64, 10, rouge, data);
     map_render(data);
+    // on envoie un rayon a partir du joueur
+    project_rayon(data);
     mlx_put_image_to_window(data->mlx_ptr, data->mlx_window, data->frame.img, 0, 0);
     return (0);
 }

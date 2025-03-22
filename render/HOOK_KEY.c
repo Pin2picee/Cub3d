@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 13:24:22 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/22 16:20:07 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/22 17:36:29 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int key_reset(int keypress, t_game *data)
 {
 	if (keypress == W)
 		data->key_up = false;
-	else if (keypress == S)
+	if (keypress == S)
 		data->key_down = false;
-	else if (keypress == D)
+	if (keypress == D)
 		data->key_right = false;
-	else if (keypress == A)
+	if (keypress == A)
 		data->key_left = false;
-	else if (keypress == rotate_left)
+	if (keypress == rotate_left)
 		data->key_rotate_left = false;
-	else if (keypress == rotate_right)
+	if (keypress == rotate_right)
 		data->key_rotate_right = false;
 	return (0);
 }
@@ -44,15 +44,15 @@ int key_press(int keypress, t_game *data)
 {   
 	if (keypress == W)
 		data->key_up = true;
-	else if (keypress == S)
+	if (keypress == S)
 		data->key_down = true;
-	else if (keypress == D)
+	if (keypress == D)
 		data->key_right = true;
-	else if (keypress == A)
+	if (keypress == A)
 		data->key_left = true;
-	else if (keypress == rotate_left)
+	if (keypress == rotate_left)
 		data->key_rotate_left = true;
-	else if (keypress == rotate_right)
+	if (keypress == rotate_right)
 		data->key_rotate_right = true;
 	//printf("%d\n", keypress);
 	return (0);
@@ -70,24 +70,24 @@ void    move_player(t_game *data)
 		data->pos_player.x += (cos_angle * 0.1);
 		data->pos_player.y += (sin_angle * 0.1);
 	}
-	else if (data->key_down == true)
+	if (data->key_down == true)
 	{
 		data->pos_player.x -= cos_angle * 0.1;
 		data->pos_player.y -= sin_angle * 0.1;
 	}
-	else if (data->key_right == true)
+	if (data->key_right == true)
 	{
-		data->pos_player.x += cos_angle * 0.1;
-		data->pos_player.x -= sin_angle * 0.1;
+		data->pos_player.x -=  sin_angle * 0.1;
+		data->pos_player.y += cos_angle * 0.1;
 	}
-	else if (data->key_left == true)
+	if (data->key_left == true)
 	{
-		data->pos_player.x -= cos_angle * 0.1;
 		data->pos_player.x += sin_angle * 0.1;
+		data->pos_player.y -= cos_angle * 0.1;
 	}
-	else if (data->key_rotate_left)
+	if (data->key_rotate_left)
 		data->player_angle -= 0.05;
-	else if (data->key_rotate_right)
+	if (data->key_rotate_right)
 		data->player_angle += 0.05;
 	if (data->player_angle > PI * 2)
 		data->player_angle = 0;
