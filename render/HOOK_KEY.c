@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 13:24:22 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/22 17:36:29 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:44:45 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,28 +62,30 @@ void    move_player(t_game *data)
 {
 	double cos_angle;
 	double sin_angle;
+	t_point current;
 	
+	current = data->pos_player;
 	sin_angle = sin(data->player_angle);
 	cos_angle = cos(data->player_angle);
 	if (data->key_up == true)
 	{
-		data->pos_player.x += (cos_angle * 0.1);
-		data->pos_player.y += (sin_angle * 0.1);
+		current.x += (cos_angle * 0.1);
+		current.y += (sin_angle * 0.1);
 	}
 	if (data->key_down == true)
 	{
-		data->pos_player.x -= cos_angle * 0.1;
-		data->pos_player.y -= sin_angle * 0.1;
+		current.x -= cos_angle * 0.1;
+		current.y -= sin_angle * 0.1;
 	}
 	if (data->key_right == true)
 	{
-		data->pos_player.x -=  sin_angle * 0.1;
-		data->pos_player.y += cos_angle * 0.1;
+		current.x -=  sin_angle * 0.1;
+		current.y += cos_angle * 0.1;
 	}
 	if (data->key_left == true)
 	{
-		data->pos_player.x += sin_angle * 0.1;
-		data->pos_player.y -= cos_angle * 0.1;
+		current.x += sin_angle * 0.1;
+		current.y -= cos_angle * 0.1;
 	}
 	if (data->key_rotate_left)
 		data->player_angle -= 0.05;
@@ -93,6 +95,8 @@ void    move_player(t_game *data)
 		data->player_angle = 0;
 	if (data->player_angle < 0)
 		data->player_angle = PI * 2;
-	//printf("x : %f\n", data->pos_player.x);
-	//printf("y : %f\n", data->pos_player.y);
+	if (data->map[(int)current.y][(int)current.x] == '1')
+		return ;
+	data->pos_player.x = current.x;
+	data->pos_player.y = current.y;
 }

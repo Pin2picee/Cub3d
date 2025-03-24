@@ -91,6 +91,8 @@ char	**copy_map(char **map, int height)
 	int		i;
 
 	i = -1;
+	if (!map || !map[0] || height == 0)
+		return (NULL);
 	copy = malloc(sizeof(char *) * (height + 1));
 	if (!copy)
 	{
@@ -110,4 +112,44 @@ char	**copy_map(char **map, int height)
 	}
 	copy[i] = NULL;
 	return (copy);
+}
+
+/*
+==============================
+		fonction qui check 
+		si il y a des nb dans 
+		les vigules 
+==============================
+*/
+
+int	no_number(char *line)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(line);// len
+	if (!line)
+		return (1);
+	while (i < len && line[i])
+	{
+		if (line[i]  < '0' || line[i++] > '9')// veut dire si diff d'un nombre
+			return (1);
+		if (line[i] && line[i] == ',')
+		{
+			i++;
+			if (i == len)
+				return (1);
+		}
+	}
+	return (0);
+}
+
+int	check_xpm(t_game *data)
+{
+	if (check_extension(data->NO, ".xpm") || check_extension(data->SO, ".xpm")
+		||check_extension(data->WE, ".xpm") || check_extension(data->EA, ".xpm"))
+			return (1);
+	
+	return (0);
 }

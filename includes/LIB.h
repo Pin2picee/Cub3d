@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/22 15:23:12 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:10:11 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ int init_my_mlx(t_game *data);
 ===============================================
 */
 
+void ft_init_data(t_game *data);
+
 void    put_pixel(int x, int y, int color, t_game *data);
 void    clean_img(t_game *data);
 void    draw_square(int x, int y, int size, int color, t_game *data);
@@ -162,4 +164,9 @@ void    init_hook(t_game *data);
 int     key_reset(int keypress, t_game *data);
 int     key_press(int keypress, t_game *data);
 void    move_player(t_game *data);
+int	    no_number(char *line);
+int	    check_xpm(t_game *data);
+int     check_extension(char *file, const char *extension);
+double  Vabsolue(double nb);
+
 #endif

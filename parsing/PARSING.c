@@ -6,18 +6,18 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/19 09:52:43 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:15:39 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/LIB.h"
 
-int check_extension(char *file)
+int check_extension(char *file, const char *extension)
 {
-	char *extension;
+	char *after_last_point;
 	
-	extension = ft_strrchr(file, '.');
-	if (!extension || ft_strcmp(extension, ".cub"))// si pas de . ou extension differente
+	after_last_point = ft_strrchr(file, '.');
+	if (!after_last_point || !extension || ft_strcmp(after_last_point, extension))// si pas de . ou extension differente
 	{
 		return (1);
 	}
@@ -81,6 +81,8 @@ int	check_RGB_F(t_game *data)
 		j++;
 	if (limit_number_rgb(data->split[i] + j))
 		return (1);
+	if (no_number(data->split[i] + j))
+		return (1);
 	while (data->split[i][j])
 	{
 		if ((data->split[i][j] < '0' || data->split[i][j] > '9') && data->split[i][j] != ',')
@@ -106,8 +108,11 @@ int	check_RGB_C(t_game *data)
 		j++;
 	if (limit_number_rgb(data->split[i] + j))
 		return (1);
+	if (no_number(data->split[i] + j))
+		return (1);
 	while (data->split[i][j])
 	{
+		//TODO: ,,
 		if ((data->split[i][j] < '0' || data->split[i][j] > '9') && data->split[i][j] != ',')
 			return (1);
 		j++;
@@ -193,7 +198,8 @@ int	fd_to_map(int fd, int total_lu, t_game *game)
 */
 int main_parsing(char *file, t_game *data)
 {
-	if (check_extension(file))// verifie la bonne extension
+	ft_init_data(data);
+	if (check_extension(file, ".cub"))// verifie la bonne extension
 		return (1);
 
 	if (ft_file_empty(file))// verifie si le fichier est vide
@@ -209,10 +215,14 @@ int main_parsing(char *file, t_game *data)
 		return (1);
 	
 	data->map = data->split + data->index;
-	if (chop_texture(data, 0, 0, 0))// recupere les chemins des textures en verifiant l'access
+	if (chop_texture(data, -1, 0, 0) || check_xpm(data))// recupere les chemins des textures en verifiant l'access
 		return (1);
 	if (parse_map(data))
 		return (1);
-	
+	// free si jamais faux
 	return (0);
 }
+
+//TODO: check .xpm de chaque textures// FAIT
+//TODO: check lorsque la map n'est plus la // FAIT
+//TODO lorsque le personnage est dans un autre endroit que la map elle meme

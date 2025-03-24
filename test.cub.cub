@@ -1,12 +1,11 @@
-
-SO ./MAIN.c
-WE ./MAIN.c
-EA ./MAIN.c
-NO ./MAIN.c
+SO filetest.xpm
+WE filetest.xpm
+EA filetest.xpm
+NO filetest.xpm
 
 
 F 220,100,0
-C 225,0,255
+C 12,25,1
 
         1111111111111111111111111
         1000000000110000000000001

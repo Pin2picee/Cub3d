@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:20:03 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/19 09:52:30 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:19:08 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ int ft_line_empty(char *line)
 	int i;
 
 	i = 0;
+	if (!line)
+		return (0);
 	while (line[i])
 	{
 		if (line[i] != ' ' || line[i] != '\n' || line[i] != '\t')
-			return (0);    
+			return (0);
 		i++;
 	}
 	return (1);
@@ -114,7 +116,7 @@ int	ft_init_split(char *file, t_game *data, int fd, int lettre_lu)
 /*
 ======================================================
 				Check si doublon
-======================================================
+=====================if (str[i] == ',')=================================
 */
 int	CheckAlreadyExist(t_game *data)
 {
