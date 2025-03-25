@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/24 16:10:11 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:55:01 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdbool.h>
 # include <math.h>
 
-# define RESOLUTION_L 2500
+# define RESOLUTION_L 1920
 # define RESOLUTION_H 1080
 # define BUFFERSIZ 1024
 # define NAME_WINDOW "Cub3d"
@@ -50,7 +50,8 @@ typedef struct s_img
     int     bpp;
     int     endian;
     int     size_line;
-    
+    int     width;
+    int     height;
 }               t_img;
 
 typedef struct s_game
@@ -60,6 +61,8 @@ typedef struct s_game
     int     index;// initaliser a after texture
     char	**TextureName;// FREEE OUBLIE PAS
     char    **split;// NE PAS OUBLIER DE FREE
+    int     ceiling;
+    int     floor;
     
     //-----------------------Chemins des textures
     char    *NO;
@@ -82,12 +85,18 @@ typedef struct s_game
     bool key_right;
     bool key_rotate_left;
     bool key_rotate_right;
+    
     //-------------------------------- RENDER
 
     
     void    *mlx_ptr;
     void    *mlx_window;
     t_img   frame;
+    t_img   NO_t;
+    t_img   SO_t;
+    t_img   WE_t;
+    t_img   EA_t;
+    
 }           t_game;
 
 
@@ -168,5 +177,10 @@ int	    no_number(char *line);
 int	    check_xpm(t_game *data);
 int     check_extension(char *file, const char *extension);
 double  Vabsolue(double nb);
+
+void    load_texture(t_game *data);
+void   floor_and_ceiling(t_game *data);
+int	    ft_get_color_key(char *str);
+
 
 #endif

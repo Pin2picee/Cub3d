@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 13:24:22 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/24 17:44:45 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:47:18 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void    move_player(t_game *data)
 		current.y -= cos_angle * 0.1;
 	}
 	if (data->key_rotate_left)
-		data->player_angle -= 0.05;
+		data->player_angle -= 0.07;
 	if (data->key_rotate_right)
-		data->player_angle += 0.05;
+		data->player_angle += 0.07;
 	if (data->player_angle > PI * 2)
 		data->player_angle = 0;
 	if (data->player_angle < 0)

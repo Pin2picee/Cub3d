@@ -65,12 +65,10 @@ int	limit_number_rgb(char *str)
 		j = 0;
 		while (str[i] && str[i] != ',')
 		{
-
 			if (j >= 3)
 				return (1);
-			color[j] = str[i];
+			color[j] = str[i++];
 			j++;
-			i++;
 		}
 		if (str[i] == ',')
 				count++;

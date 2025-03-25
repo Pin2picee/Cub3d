@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/24 14:15:39 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:55:18 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	check_RGB_F(t_game *data)
 		j++;
 	while(data->split[i][j] && data->split[i][j] == ' ')
 		j++;
+	data->floor = ft_get_color_key(data->split[i] + j);
 	if (limit_number_rgb(data->split[i] + j))
 		return (1);
 	if (no_number(data->split[i] + j))
@@ -106,6 +107,7 @@ int	check_RGB_C(t_game *data)
 		j++;
 	while(data->split[i][j] && data->split[i][j] == ' ')
 		j++;
+	data->ceiling = ft_get_color_key(data->split[i] + j);
 	if (limit_number_rgb(data->split[i] + j))
 		return (1);
 	if (no_number(data->split[i] + j))
@@ -219,6 +221,7 @@ int main_parsing(char *file, t_game *data)
 		return (1);
 	if (parse_map(data))
 		return (1);
+
 	// free si jamais faux
 	return (0);
 }
