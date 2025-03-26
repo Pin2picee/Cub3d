@@ -2,6 +2,8 @@
     "files.associations": {
         "MAIN.C": "cpp",
         "PARSING.C": "cpp",
-        "lib.h": "c"
+        "lib.h": "c",
+        "sstream": "c",
+        "cmath": "c"
     }
 }
