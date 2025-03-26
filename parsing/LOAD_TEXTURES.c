@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 15:11:50 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/25 16:15:14 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:38:06 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,8 @@ void    load_texture(t_game *data)
     
     data->EA_t.img = mlx_xpm_file_to_image(data->mlx_ptr, data->EA, &data->EA_t.width, &data->EA_t.height);
     data->EA_t.data = mlx_get_data_addr(data->EA_t.img, &data->EA_t.bpp, &data->EA_t.size_line, &data->EA_t.endian);
+    data->tab_img[0] = &data->WE_t;
+    data->tab_img[1] = &data->EA_t;
+    data->tab_img[2] = &data->NO_t;
+    data->tab_img[3] = &data->NO_t;
 }

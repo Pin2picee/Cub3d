@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:13:24 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/25 18:43:49 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:11:05 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,68 +46,33 @@ void    init_game(t_game *data)
    //draw_square(data->pos_player.x * 64, data->pos_player.y * 64, 5, rouge,  data);// on dessine un carrer qui represente le personnage
 }
 
-void    project_rayon_precis(t_game *data, double start_angle, double *rayon_x, double *rayon_y)
-{
-    //int  px;
-    //int  py;
-    
-    while (data->map[(int)*rayon_y][(int)*rayon_x] != '1')
-    {
-        //px = (int)(*rayon_x * 10);
-        //py = (int)(*rayon_y * 10);
-        //put_pixel(px, py, 0xFFFF00, data);
-        
-        *rayon_x += cos(start_angle) * 0.01;
-        *rayon_y += sin(start_angle) * 0.01;
-    }
-    // calculer la distance du rayon puis afficher un mur en fonction de cela
-}
 
-void    project_rayon(t_game *data, double start_angle, int i)
-{
-    double  rayon_x;
-    double  rayon_y;
-    //int  px;
-    //int  py;
-    double distance_rayon;
-    double taille_mur;
-    int finish;
-    int start_y;
+void    project_rayon(t_game *d, double start_angle, int i)
+{   
+    int     texture_x;
+    int     texture_y;
+    int     color;
+    double  ratio;
     
-    rayon_x = data->pos_player.x;
-    rayon_y = data->pos_player.y;
-    while (data->map[(int)rayon_y][(int)rayon_x] != '1')
+    d->r_x = d->pos_player.x;
+    d->r_y = d->pos_player.y;
+    while (d->map[(int)d->r_y][(int)d->r_x] != '1')
     {
-        //px = (int)(rayon_x * 10);
-        //py = (int)(rayon_y * 10);
-        //put_pixel(px, py, 0xFFFF00, data);
-        
-        rayon_x += cos(start_angle) * 0.01;
-        rayon_y += sin(start_angle) * 0.01;
+        d->r_x += cos(start_angle) * 0.01;
+        d->r_y += sin(start_angle) * 0.01;
     }
-    rayon_x -= cos(start_angle) * 0.01;
-    rayon_y -= sin(start_angle) * 0.01;
-    project_rayon_precis(data, start_angle, &rayon_x, &rayon_y);// opti
-    distance_rayon = pow(Vabsolue(rayon_x - data->pos_player.x), 2) + pow(Vabsolue(rayon_y - data->pos_player.y), 2); //theoreme de pythagore
-    distance_rayon = sqrt(distance_rayon);// racine carre de delta x sur delta y
-    
-    taille_mur = ( 130 / distance_rayon) * (data->map_height / 2) / cos(data->player_angle - start_angle);
-    //printf ("%d\n", taille_mur);
-    start_y = (RESOLUTION_H - taille_mur) / 2;
-    finish = start_y + taille_mur;
-    //int texture_x = (int)(rayon_x * data->SO_t.width) % data->SO_t.width;
-    //int texture_y;
-    //int color;
-
-    while (start_y < finish)
+    what_texture(d, start_angle);// determine quelle texture afficher par pixel -> rayon
+    info_recast(d, start_angle);// fait les calcul pour la taille des murs en fonction de la distance
+    texture_x = ft_do_x(d);
+    ratio = (double)d->tab_img[d->choice]->height / (double)d->wall_size;
+    while (++d->start_y < d->finish)
     {
-        // Coordonnée y de la texture
-        //texture_y = (int)((start_y - (RESOLUTION_H - taille_mur) / 2) * data->SO_t.height / taille_mur) % data->SO_t.height;
-       // color = *(int *)(data->SO_t.data + (texture_y * data->SO_t.width + texture_x) * 4);
-        put_pixel(i, start_y, 0xFF0000, data);
-        start_y++;
+        texture_y = (int)((d->start_y - (RESOLUTION_H - d->wall_size) / 2.0) * ratio) % d->tab_img[d->choice]->height;
+        if (texture_y < 0) 
+            texture_y += d->tab_img[d->choice]->height;
+        color = *(int *)(d->tab_img[d->choice]->data + (texture_y * d->tab_img[d->choice]->width + texture_x) * 4);
+        put_pixel(i, d->start_y, color, d);
     }
-    
 }
 
 void    fov(t_game *data)

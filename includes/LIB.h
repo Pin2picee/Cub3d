@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/25 17:55:01 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:38:23 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <stdbool.h>
 # include <math.h>
 
-# define RESOLUTION_L 1920
-# define RESOLUTION_H 1080
+# define RESOLUTION_L 900
+# define RESOLUTION_H 600
 # define BUFFERSIZ 1024
 # define NAME_WINDOW "Cub3d"
 # define rouge 0xFFFF0000
@@ -79,6 +79,15 @@ typedef struct s_game
     t_point pos_player;
     double  player_angle;
     char    angle_initiale;
+    //utiliser pour economiser de l'espace dans mes fonctions
+    double  r_x;
+    double  r_y;
+    double  dist_rayon;
+    double  wall_size;
+    int     finish;
+    int     start_y;
+    int     choice;
+    
     bool key_up;
     bool key_down;
     bool key_left;
@@ -96,7 +105,7 @@ typedef struct s_game
     t_img   SO_t;
     t_img   WE_t;
     t_img   EA_t;
-    
+    t_img   *tab_img[4];
 }           t_game;
 
 
@@ -179,8 +188,12 @@ int     check_extension(char *file, const char *extension);
 double  Vabsolue(double nb);
 
 void    load_texture(t_game *data);
-void   floor_and_ceiling(t_game *data);
+void    floor_and_ceiling(t_game *data);
 int	    ft_get_color_key(char *str);
+double  get_distance_rayon(double x_1, double x_2, double y_1, double y_2);
+void    what_texture(t_game *d, double start_angle);
+void    info_recast(t_game *d, double start_angle);
+int ft_do_x(t_game *d);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/25 17:55:18 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:46:01 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ int main_parsing(char *file, t_game *data)
 		return (1);
 	if (parse_map(data))
 		return (1);
-
+	data->choice = 1;
 	// free si jamais faux
 	return (0);
 }
