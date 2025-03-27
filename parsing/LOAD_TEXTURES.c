@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 15:11:50 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/26 13:38:06 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:12:38 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void    load_texture(t_game *data)
     data->tab_img[0] = &data->WE_t;
     data->tab_img[1] = &data->EA_t;
     data->tab_img[2] = &data->NO_t;
-    data->tab_img[3] = &data->NO_t;
+    data->tab_img[3] = &data->SO_t;
 }

@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:18:17 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/26 18:46:01 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:11:51 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,13 @@ int check_extension(char *file, const char *extension)
 	char *after_last_point;
 	
 	after_last_point = ft_strrchr(file, '.');
-	if (!after_last_point || !extension || ft_strcmp(after_last_point, extension))// si pas de . ou extension differente
+	if (!after_last_point || !extension || ft_strcmp(after_last_point, extension))
 	{
 		return (1);
 	}
 	return (0);
 }
 
-/*
-=======================================================
-				Check si toutes les clefs existe
-				et appel la check doublon
-=======================================================
-*/
 int	CheckExist(t_game *data, int i, int j)
 {
 	int		count;
@@ -53,18 +47,11 @@ int	CheckExist(t_game *data, int i, int j)
 	}
 	while (ft_line_empty(data->split[j]))
 		j++;
-	data->index = j;// rammene mon index a la deniere texture + 1
+	data->index = j;
 	if(count < 5 || CheckAlreadyExist(data))
 		return (1);
 	return (0);
 }
-
-/*
-===================================================
-
-			Check le bon format du sol et du plafond
-===================================================
-*/
 
 int	check_RGB_F(t_game *data)
 {
@@ -114,7 +101,6 @@ int	check_RGB_C(t_game *data)
 		return (1);
 	while (data->split[i][j])
 	{
-		//TODO: ,,
 		if ((data->split[i][j] < '0' || data->split[i][j] > '9') && data->split[i][j] != ',')
 			return (1);
 		j++;
@@ -122,12 +108,6 @@ int	check_RGB_C(t_game *data)
 	return (0);
 }
 
-/*
-==================================================
-	fonction va chercher et checker les chemins des textures
-	et qui les stock dans la data            
-==================================================
-*/
 
 int	chop_texture(t_game *data, int i, int j, int fd)
 {

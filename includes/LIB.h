@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:54:21 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/26 18:38:23 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:24:51 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,90 +36,96 @@
 # define D 100
 # define rotate_left 65361
 # define rotate_right 65363
-
+# define SHIFT 65505
+# define ESC 65307
+# define WALL_SIZE 70
+# define speedrun 0.03
+# define speedrotate 0.07
 typedef struct s_point
 {
-    double x;
-    double y;
+	double x;
+	double y;
 }               t_point;
 
 typedef struct s_img
 {
-    char    *data;
-    void    *img;
-    int     bpp;
-    int     endian;
-    int     size_line;
-    int     width;
-    int     height;
+	char    *data;
+	void    *img;
+	int     bpp;
+	int     endian;
+	int     size_line;
+	int     width;
+	int     height;
 }               t_img;
 
 typedef struct s_game
 {
-    //------------------------------- for file
-    int     total_lu;// de bytes lu par read pour
-    int     index;// initaliser a after texture
-    char	**TextureName;// FREEE OUBLIE PAS
-    char    **split;// NE PAS OUBLIER DE FREE
-    int     ceiling;
-    int     floor;
-    
-    //-----------------------Chemins des textures
-    char    *NO;
-    char    *SO;//                   -> A NE SURTOUT PAS FREE CAR CES DES POINTEURS VERS MON SPLIT
-    char    *WE;
-    char    *EA;
-    char    *F;
-    char    *C;
-    //--------------------------------- MAP
-    int map_height;
-    int flags;
-    //---------------------------------
-    char    **map;// dans un tableau de tableau avec axe x et y
-    t_point pos_player;
-    double  player_angle;
-    char    angle_initiale;
-    //utiliser pour economiser de l'espace dans mes fonctions
-    double  r_x;
-    double  r_y;
-    double  dist_rayon;
-    double  wall_size;
-    int     finish;
-    int     start_y;
-    int     choice;
-    
-    bool key_up;
-    bool key_down;
-    bool key_left;
-    bool key_right;
-    bool key_rotate_left;
-    bool key_rotate_right;
-    
-    //-------------------------------- RENDER
+	//------------------------------- for file
+	int     total_lu;// de bytes lu par read pour
+	int     index;// initaliser a after texture
+	char	**TextureName;// FREEE OUBLIE PAS
+	char    **split;// NE PAS OUBLIER DE FREE
+	int     ceiling;
+	int     floor;
+	
+	//-----------------------Chemins des textures
+	char    *NO;
+	char    *SO;//                   -> A NE SURTOUT PAS FREE CAR CES DES POINTEURS VERS MON SPLIT
+	char    *WE;
+	char    *EA;
+	char    *F;
+	char    *C;
+	//--------------------------------- MAP
+	int map_height;
+	int flags;
+	//---------------------------------
+	char    **map;// dans un tableau de tableau avec axe x et y
+	t_point pos_player;
+	double  player_angle;
+	char    angle_initiale;
+	//utiliser pour economiser de l'espace dans mes fonctions
+	double  r_x;
+	double  r_y;
+	double  dist_rayon;
+	double  wall_size;
+	int     finish;
+	int     start_y;
+	int     choice;
+	
+	bool	key_up;
+	bool	key_down;
+	bool	key_left;
+	bool	key_right;
+	bool	key_rotate_left;
+	bool	key_rotate_right;
+	bool	key_esc;
+	bool	key_speed;
+	
+	//-------------------------------- RENDER
 
-    
-    void    *mlx_ptr;
-    void    *mlx_window;
-    t_img   frame;
-    t_img   NO_t;
-    t_img   SO_t;
-    t_img   WE_t;
-    t_img   EA_t;
-    t_img   *tab_img[4];
+	
+	void    *mlx_ptr;
+	void    *mlx_window;
+	t_img   frame;
+	t_img   NO_t;
+	t_img   SO_t;
+	t_img   WE_t;
+	t_img   EA_t;
+	t_img   *tab_img[4];
 }           t_game;
 
 
 /*
 typedef struct s_img
 {
-    // data
+	// data
 };      t_img;
 
 */
 
 /*
 =================================
-            PARSING -> adil
+			PARSING -> adil
 =================================
 */
 
@@ -147,7 +153,7 @@ char	**copy_map(char **map, int height);// la meme que celui de so_long
 
 /*
 =============================================
-                FREE
+				FREE
 =============================================
 */
 
@@ -157,7 +163,7 @@ void    free_tab(char **tab);
 
 /*
 ============================================
-            RENDER -> RECASTING
+			RENDER -> RECASTING
 ============================================
 */
 
@@ -166,7 +172,7 @@ int init_my_mlx(t_game *data);
 
 /*
 ===============================================
-                    GAME
+					GAME
 ===============================================
 */
 
