@@ -1,7 +1,7 @@
-NO cub3d
-SO cub3d
-WE cub3d
-EA cub3d
+SO ./wall_texture/brique_texture.xpm
+WE ./wall_texture/metal.xpm
+EA ./wall_texture/textureb.xpm
+NO ./wall_texture/texturea.xpm
 
 C 300,1,1
 F 1,1,1

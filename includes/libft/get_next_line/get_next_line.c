@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:49:43 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/13 13:28:23 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:39:52 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_next_line(int fd)
 	char			*ligne;
 
 	if ((fd < 0 || BUFFER_SIZE <= 0 || read(fd, &ligne, 0) < 0
-		|| read(fd, 0, 0) < 0) && stash != NULL)
+			|| read(fd, 0, 0) < 0) && stash != NULL)
 	{
 		free(stash->content);
 		free(stash);

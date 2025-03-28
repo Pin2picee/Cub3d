@@ -12,9 +12,9 @@
 
 #include "../includes/LIB.h"
 
-void    free_tab(char **tab)
+void	free_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!tab)
@@ -25,12 +25,10 @@ void    free_tab(char **tab)
 	return ;
 }
 
-
-void    free_data(t_game *data)
+void	free_data(t_game *data)
 {
-	if (data->TextureName)
-		free_tab(data->TextureName);
-	// on free la map via le split de ma data car j'ai fait un pointeur vers le debut de la map
+	if (data->texture_name)
+		free_tab(data->texture_name);
 	if (data->split)
 		free_tab(data->split);
 	if (data->mlx_window)
@@ -38,26 +36,16 @@ void    free_data(t_game *data)
 		mlx_clear_window(data->mlx_ptr, data->mlx_window);
 		mlx_destroy_window(data->mlx_ptr, data->mlx_window);
 	}
-	if (data->SO_t.img)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->SO_t.img);
-	}
-	if (data->NO_t.img)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->NO_t.img);
-	}
-	if (data->EA_t.img)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->EA_t.img);
-	}	
-	if (data->WE_t.img)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->WE_t.img);
-	}
+	if (data->so_t.img)
+		mlx_destroy_image(data->mlx_ptr, data->so_t.img);
+	if (data->no_t.img)
+		mlx_destroy_image(data->mlx_ptr, data->no_t.img);
+	if (data->ea_t.img)
+		mlx_destroy_image(data->mlx_ptr, data->ea_t.img);
+	if (data->we_t.img)
+		mlx_destroy_image(data->mlx_ptr, data->we_t.img);
 	if (data->frame.img)
-	{
 		mlx_destroy_image(data->mlx_ptr, data->frame.img);
-	}
 	if (data->mlx_ptr)
 	{
 		mlx_destroy_display(data->mlx_ptr);

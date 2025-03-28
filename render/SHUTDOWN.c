@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_destroy_display.c                              :+:      :+:    :+:   */
+/*   SHUTDOWN.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/03 18:56:35 by mg                #+#    #+#             */
-/*   Updated: 2020/10/04 01:55:35 by mg               ###   ########.fr       */
+/*   Created: 2025/03/28 17:26:37 by abelmoha          #+#    #+#             */
+/*   Updated: 2025/03/28 18:01:24 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_int.h"
+#include "../includes/LIB.h"
 
-int	mlx_destroy_display(t_xvar *xvar)
+int	ft_croix_rouge(t_game *data)
 {
-	XCloseDisplay(xvar->display);
+	free_data(data);
+	exit(0);
 }

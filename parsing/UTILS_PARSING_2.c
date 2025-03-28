@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/LIB.h"
+
 /*
 =================================
 		Fonction qui check si le nombre des colors et pas < 0 && > 256
@@ -18,21 +19,21 @@
 		A FINIR
 =================================
 */
-
 int	ft_position(t_game *game)
 {
 	int	i;
 	int	j;
 	int	count;
 
-	i = 0;
+	i = -1;
 	count = 0;
-	while (game->map[i])
+	while (game->map[++i])
 	{
 		j = 0;
 		while (game->map[i][j])
 		{
-			if (game->map[i][j] == 'N' || game->map[i][j] == 'E' || game->map[i][j] == 'S' || game->map[i][j] == 'W')
+			if (game->map[i][j] == 'N' || game->map[i][j] == 'E'
+					|| game->map[i][j] == 'S' || game->map[i][j] == 'W')
 			{
 				count++;
 				game->angle_initiale = game->map[i][j];
@@ -41,25 +42,19 @@ int	ft_position(t_game *game)
 			}
 			j++;
 		}
-		i++;
 	}
 	if (count > 1)
 		return (1);
 	return (0);
 }
 
-int	limit_number_rgb(char *str)
+int	limit_number_rgb(char *str, int i, int j, int count)
 {
 	char	color[4];
-	int		i;
-	int		j;
-	int		count;
 
-	i = 0;
-	count = 0;
 	if (!str)
 		return (1);
-	while (str && str[i] )
+	while (str && str[i])
 	{
 		ft_bzero(color, sizeof(color));
 		j = 0;
@@ -71,7 +66,7 @@ int	limit_number_rgb(char *str)
 			j++;
 		}
 		if (str[i] == ',')
-				count++;
+			count++;
 		if (ft_atoi(color) > 255 || ft_atoi(color) < 0)
 			return (1);
 		if (str[i])
@@ -80,7 +75,6 @@ int	limit_number_rgb(char *str)
 	if (count != 2)
 		return (1);
 	return (0);
-
 }
 
 char	**copy_map(char **map, int height)
@@ -119,19 +113,18 @@ char	**copy_map(char **map, int height)
 		les vigules 
 ==============================
 */
-
 int	no_number(char *line)
 {
 	int	i;
 	int	len;
 
 	i = 0;
-	len = ft_strlen(line);// len
+	len = ft_strlen(line);
 	if (!line)
 		return (1);
 	while (i < len && line[i])
 	{
-		if (line[i]  < '0' || line[i++] > '9')// veut dire si diff d'un nombre
+		if (line[i] < '0' || line[i++] > '9')
 			return (1);
 		if (line[i] && line[i] == ',')
 		{
@@ -145,9 +138,9 @@ int	no_number(char *line)
 
 int	check_xpm(t_game *data)
 {
-	if (check_extension(data->NO, ".xpm") || check_extension(data->SO, ".xpm")
-		||check_extension(data->WE, ".xpm") || check_extension(data->EA, ".xpm"))
-			return (1);
-	
+	if (check_extension(data->no, ".xpm") || check_extension(data->so, ".xpm")
+		||check_extension(data->we, ".xpm")
+		|| check_extension(data->ea, ".xpm"))
+		return (1);
 	return (0);
 }

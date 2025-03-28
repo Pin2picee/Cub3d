@@ -6,16 +6,15 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:20:03 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/27 18:23:30 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:14:42 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/LIB.h"
 
-
-int ft_line_empty(char *line)
+int	ft_line_empty(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line)
@@ -29,45 +28,38 @@ int ft_line_empty(char *line)
 	return (1);
 }
 
-
 /*
 ======================================================
 				Init mes textures possibles
 ======================================================
 */
-
-int ft_init_texture(t_game *d)
+int	ft_init_texture(t_game *d)
 {
-    d->TextureName = (char **)ft_calloc(7, sizeof(char *));
-	if (!d->TextureName)
+	d->texture_name = (char **)ft_calloc(7, sizeof(char *));
+	if (!d->texture_name)
 		return (1);
-    d->TextureName[0] = ft_strdup("NO ");
-    d->TextureName[1] = ft_strdup("SO ");
-    d->TextureName[2] = ft_strdup("WE ");
-    d->TextureName[3] = ft_strdup("EA ");
-    d->TextureName[4] = ft_strdup("C ");
-    d->TextureName[5] = ft_strdup("F ");
-	d->TextureName[6] = NULL;
+	d->texture_name[0] = ft_strdup("NO ");
+	d->texture_name[1] = ft_strdup("SO ");
+	d->texture_name[2] = ft_strdup("WE ");
+	d->texture_name[3] = ft_strdup("EA ");
+	d->texture_name[4] = ft_strdup("C ");
+	d->texture_name[5] = ft_strdup("F ");
+	d->texture_name[6] = NULL;
 	return (0);
 }
-
-
-
 
 /*
 ==================================================
 	verifie si le fichiers et vide           
 ==================================================
 */
-
-int ft_file_empty(char *file)
+int	ft_file_empty(char *file)
 {
 	int		fd;
-	int     nb_lu;
-	int     total_lu;
+	int		nb_lu;
+	int		total_lu;
 	char	buff_temp[1024];
 
-	
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (1);
@@ -89,19 +81,19 @@ int	ft_init_split(char *file, t_game *data, int fd, int lettre_lu)
 	int		total;
 	char	buffer[4096];
 	char	*str;
-	
+
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (1);
 	lettre_lu = read(fd, buffer, BUFFERSIZ);
 	if (!lettre_lu)
 		return (1);
-	total = lettre_lu; 
+	total = lettre_lu;
 	while (lettre_lu > 0)
 	{
 		lettre_lu = 0;
-		 lettre_lu = read(fd, buffer, BUFFERSIZ);
-		 total += lettre_lu;
+		lettre_lu = read(fd, buffer, BUFFERSIZ);
+		total += lettre_lu;
 	}
 	close(fd);
 	str = ft_calloc(sizeof(char), total + 1);
@@ -109,31 +101,34 @@ int	ft_init_split(char *file, t_game *data, int fd, int lettre_lu)
 		return (close(fd), 1);
 	fd = open(file, O_RDONLY);
 	lettre_lu = read(fd, str, total);
-	data->split = ft_split(str, '\n');// on get_next_line tout le tableau direct
+	data->split = ft_split(str, '\n');
 	return (close(fd), free(str), 0);
 }
 
 /*
 ======================================================
 				Check si doublon
-=====================if (str[i] == ',')=================================
+				if (str[i] == ',')
+======================================================
 */
-int	CheckAlreadyExist(t_game *data)
+
+int	check_already_exist(t_game *data)
 {
 	int	i;
 	int	j;
 	int	count;
-	
+
 	i = 0;
-	while (i < 6 && data->TextureName[i])
+	while (i < 6 && data->texture_name[i])
 	{
 		j = 0;
 		count = 0;
-		while(data->split[j])
+		while (data->split[j])
 		{
-			if (!ft_strncmp(data->split[j], data->TextureName[i], ft_strlen(data->TextureName[i])))
+			if (!ft_strncmp(data->split[j], data->texture_name[i],
+					ft_strlen(data->texture_name[i])))
 				count++;
-			if(count > 1)
+			if (count > 1)
 				return (1);
 			j++;
 		}

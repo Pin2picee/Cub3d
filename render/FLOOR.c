@@ -6,7 +6,7 @@
 /*   By: abelmoha <abelmoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:54:24 by abelmoha          #+#    #+#             */
-/*   Updated: 2025/03/27 18:30:29 by abelmoha         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:26:38 by abelmoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int	get_hexa(int r, int v, int b)
 {
-	unsigned long hexa;
+	unsigned long	hexa;
 
 	hexa = (r << 16) | (v << 8) | (b);
-
 	return ((int)hexa);
 }
-
 
 int	ft_get_color_key(char *str)
 {
@@ -29,11 +27,10 @@ int	ft_get_color_key(char *str)
 	int		index;
 	char	color[4];
 	int		couleur[3];
-	
+
 	i = 0;
 	j = 0;
 	index = 0;
-	//TODO:aller chercher le premier nombre puis le deuxieme puis le 3 eme
 	while (i < (int)ft_strlen(str) && str[i])
 	{
 		ft_bzero(color, 4);
@@ -52,8 +49,7 @@ int	ft_get_color_key(char *str)
 }
 
 // recupere pour les deux cles les 3 nombres, transformer en hexa
-
-void   floor_and_ceiling(t_game *data)
+void	floor_and_ceiling(t_game *data)
 {
 	int	x;
 	int	y;
